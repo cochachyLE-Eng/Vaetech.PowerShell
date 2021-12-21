@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netStandard2.1;net45;net461;net48</TargetFrameworks>
+    <Description>Lightweight implementation for running commands with lambda expressions and getting data from PowerShell, in
+.Net Framework, .Net Standard and .Net Core</Description>
+    <PackageLicenseExpression>MIT OR Apache-2.0</PackageLicenseExpression>
+    <Company>LIIKSOFT</Company>
+    <Authors>Luis Eduardo Cochachi Chamorro</Authors>
+    <PackageProjectUrl>https://github.com/cochachyLE-Eng/Vaetech.PowerShell</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/cochachyLE-Eng/Vaetech.PowerShell</RepositoryUrl>
+    <PackageIcon>package.png</PackageIcon>
+    <PackageIconUrl />
+    <PackageTags>PowerShell, Lambda Shell, PShell</PackageTags>
+    <Version>1.0.3</Version>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />    
+    <PackageReference Include="Vaetech.Data.ContentResult" Version="1.6.6" />
+    <PackageReference Include="Vaetech.Runtime.Utils" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Stop-Process\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\icons\package.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
+
