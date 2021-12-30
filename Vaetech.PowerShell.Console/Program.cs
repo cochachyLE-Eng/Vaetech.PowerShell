@@ -84,16 +84,16 @@ namespace Vaetech.PowerShell.Console
             System.Console.WriteLine("# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.Console.WriteLine("# Stop Process (-Force) by date range");
             System.Console.WriteLine("# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            var getProcessResponse = PShell.GetProcess("w3wp").WhereObject(c => c.StartTime > DateTime.Now.AddDays(-7) && c.StartTime < DateTime.Now.AddDays(-1)).StopProcessForce();
-            string command = getProcessResponse.GetCommand();
+            var stopProcessResponse = PShell.GetProcess("w3wp").WhereObject(c => c.StartTime > DateTime.Now.AddDays(-7) && c.StartTime < DateTime.Now.AddDays(-1)).StopProcessForce();
+            string command = stopProcessResponse.GetCommand();
 
             System.Console.WriteLine(command);
 
             // Execute command
-            ActionResult<GetProcessResponse> resultGetProcess = getProcessResponse.Execute();
+            ActionResult<GetProcessResponse> resultStopProcess = stopProcessResponse.Execute();
 
-            if (resultGetProcess.IB_Exception)
-                System.Console.WriteLine("Error: {0}", resultGetProcess.Message);
+            if (resultStopProcess.IB_Exception)
+                System.Console.WriteLine("Error: {0}", resultStopProcess.Message);
             else
             {
                 System.Console.WriteLine("Successful process");

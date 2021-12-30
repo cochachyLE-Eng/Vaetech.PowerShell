@@ -114,16 +114,6 @@ var getProcessResponse = PShell.GetProcess("svchost", "w3wp").WhereObject(c => c
 string command = getProcessResponse.GetCommand();
 ```
 
-Stop Process (-Force) by date range
-
-```csharp
-// Stops one or more running processes.
-var getProcessResponse = PShell.GetProcess("w3wp").WhereObject(c => c.StartTime > DateTime.Now.AddDays(-7) && c.StartTime < DateTime.Now.AddDays(-1)).StopProcessForce();
-            
-// Get Command
-string command = getProcessResponse.GetCommand();
-```
-
 Run command
 
 ```csharp
@@ -139,4 +129,28 @@ else
         System.Console.WriteLine("ID: {0}, Name: {1}, StartTime: {2}, CPU: {3}", process.Id, process.Name, process.StartTime.ToString(PShellSettings.DateFormat), process.CPU);
     }
 }
+```
+
+Stop Process (-Force) by date range
+
+```csharp
+// Parameters
+DateTime[] dateTimes = new DateTime[] { DateTime.Now.AddDays(-7), DateTime.Now.AddDays(-1) };
+
+// Stop Process (-Force) by date range.
+var stopProcessResponse = PShell.GetProcess("w3wp").WhereObject(c => c.StartTime > dateTimes[0] && c.StartTime < dateTimes[1]).StopProcessForce();
+
+// Get Command
+string command = stopProcessResponse.GetCommand();
+
+// Execute command
+ActionResult<GetProcessResponse> resultStopProcess = stopProcessResponse.Execute();
+
+if (resultStopProcess.IB_Exception)
+    System.Console.WriteLine("Error: {0}", resultStopProcess.Message);
+else
+{
+    System.Console.WriteLine("Successful process");
+}
+
 ```
