@@ -21,6 +21,10 @@ namespace Vaetech.PowerShell
         public static string SelectObject => "Select-Object";
         [Display(Order = 3)]
         public static string ConvertToJson => "ConvertTo-Json";
+        [Display(Order = 4)]
+        public static string StopProcess => "Stop-Process";
+        [Display(Order = 4)]
+        public static string StopProcessForce => "Stop-Process -Force";
 
         public int this[GetProcessEnums type] => typeof(GetProcessTypes).GetProperty(Enum.GetName(typeof(GetProcessEnums), type)).GetCustomAttribute<DisplayAttribute>().GetOrder().Value;
     }

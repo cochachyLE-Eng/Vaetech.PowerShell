@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Vaetech.PowerShell.Types
+﻿namespace Vaetech.PowerShell.Types
 {
     public enum GetProcessEnums
     {
@@ -11,6 +7,8 @@ namespace Vaetech.PowerShell.Types
         Where,
         FormatTable,
         FormatList,
-        ConvertToJson
+        ConvertToJson,
+        StopProcess,
+        StopProcessForce,
     }
 }

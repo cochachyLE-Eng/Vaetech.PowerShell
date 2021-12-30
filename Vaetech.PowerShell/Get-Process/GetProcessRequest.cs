@@ -20,7 +20,7 @@ namespace Vaetech.PowerShell
             Commands.Add(new Tuple<GetProcessEnums, string>(command, arguments));
         }
         public string GetCommand()
-        {
+        {            
             string[] comand = Commands.Select(i => new { Position = new GetProcessTypes()[i.Item1], Name = i.Item2 }).OrderBy(c => c.Position).Select(c => c.Name).ToArray();
             return Command = string.Join(" ", comand);
         }

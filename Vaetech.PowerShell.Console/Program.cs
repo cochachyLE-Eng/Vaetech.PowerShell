@@ -15,6 +15,8 @@ namespace Vaetech.PowerShell.Console
             GetProcessWithErrorActionInCustomCollection();
             GetProcessByRangeDate();
 
+            StopProcessByRangeDate();
+
             System.Console.ReadKey();            
         }
         /// <summary>
@@ -75,6 +77,26 @@ namespace Vaetech.PowerShell.Console
                 {
                     System.Console.WriteLine("ID: {0}, Name: {1}, StartTime: {2}, CPU: {3}", process.Id, process.Name, process.StartTime.ToString(PShellSettings.DateFormat), process.CPU);
                 }
+            }
+        }
+        public static void StopProcessByRangeDate()
+        {
+            System.Console.WriteLine("# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.Console.WriteLine("# Stop Process (-Force) by date range");
+            System.Console.WriteLine("# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            var getProcessResponse = PShell.GetProcess("w3wp").WhereObject(c => c.StartTime > DateTime.Now.AddDays(-7) && c.StartTime < DateTime.Now.AddDays(-1)).StopProcessForce();
+            string command = getProcessResponse.GetCommand();
+
+            System.Console.WriteLine(command);
+
+            // Execute command
+            ActionResult<GetProcessResponse> resultGetProcess = getProcessResponse.Execute();
+
+            if (resultGetProcess.IB_Exception)
+                System.Console.WriteLine("Error: {0}", resultGetProcess.Message);
+            else
+            {
+                System.Console.WriteLine("Successful process");
             }
         }
     }    

@@ -298,6 +298,10 @@ namespace Vaetech.PowerShell
         public static GetProcessRequest ConvertToJson(this GetProcessRequest getProcess)
         {
             return getProcess.AddCommand(GetProcessEnums.ConvertToJson, $"|{GetProcessTypes.ConvertToJson}");
-        }        
+        }
+        public static GetProcessRequest StopProcessForce(this GetProcessRequest getProcess)
+        {
+            return getProcess.AddCommand(GetProcessEnums.StopProcessForce, $"|{GetProcessTypes.StopProcessForce}");
+        }
     }
 }

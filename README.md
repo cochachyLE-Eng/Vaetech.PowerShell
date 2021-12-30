@@ -1,6 +1,6 @@
 ﻿﻿# Vaetech.PowerShell
 
-[![Join the chat at https://badges.gitter.im/Vaetech-PowerShell](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Vaetech-PowerShell/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Join the chat at (https://badges.gitter.im/Vaetech-PowerShell)](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Vaetech-PowerShell/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 |    Package    |Latest Release|
 |:--------------|:------------:|
@@ -102,7 +102,7 @@ Get results with ErrorAction in custom collection
 // Gets the processes running on the local computer, in custom collection.
 var getProcessResponse = PShell.GetProcess(ErrorAction.SilentlyContinue,"svchost", "w3wp").SelectObject(x => new { x.Name, x.Id, x.StartTime }).WhereObject(c => c.StartTime.Date > DateTime.Now.AddDays(-24).Date).ConvertToJson();
 // Get Command
-command = getProcessResponse.GetCommand();
+string command = getProcessResponse.GetCommand();
 ```
 
 Get results by date range
@@ -111,7 +111,17 @@ Get results by date range
 // Gets the processes running on the local computer by date range, in custom collection.
 var getProcessResponse = PShell.GetProcess("svchost", "w3wp").WhereObject(c => c.StartTime > DateTime.Now.AddDays(-7) && c.StartTime < DateTime.Now.AddDays(-1)).SelectObject(x => new { x.Name, x.Id, x.StartTime, x.PM, x.WS, x.VM, x.CPU, x.Handles }).ConvertToJson();            
 // Get Command
-command = getProcessResponse.GetCommand();
+string command = getProcessResponse.GetCommand();
+```
+
+Stop Process (-Force) by date range
+
+```csharp
+// Stops one or more running processes.
+var getProcessResponse = PShell.GetProcess("w3wp").WhereObject(c => c.StartTime > DateTime.Now.AddDays(-7) && c.StartTime < DateTime.Now.AddDays(-1)).StopProcessForce();
+            
+// Get Command
+string command = getProcessResponse.GetCommand();
 ```
 
 Run command

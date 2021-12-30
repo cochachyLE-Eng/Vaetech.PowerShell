@@ -64,5 +64,25 @@ namespace Vaetech.PowerShell.Tests
             Assert.IsNull(resultGetProcess.Message);
             Assert.IsNotNull(resultGetProcess.List);
         }
+        [Test]
+        public void StopProcessByRangeDate()
+        {
+            // Settings
+            PShellSettings.DateFormat = "yyyy/MM/dd hh:mm:ss";
+
+            // Parameters
+            DateTime[] dateTimes = new DateTime[] { DateTime.Now.AddDays(-7), DateTime.Now.AddDays(-1) };
+            string command = $"Get-Process w3wp |Where-Object {{$_.StartTime -gt (Get-Date -Date \"{dateTimes[0].ToString(PShellSettings.DateFormat)}\") -and $_.StartTime -lt (Get-Date -Date \"{dateTimes[1].ToString(PShellSettings.DateFormat)}\")}} |Stop-Process -Force";
+
+            // Stop Process (-Force) by date range.
+            var stopProcessResponse = PShell.GetProcess("w3wp").WhereObject(c => c.StartTime > dateTimes[0] && c.StartTime < dateTimes[1]).StopProcessForce();
+
+            // Execute command
+            ActionResult<GetProcessResponse> resultStopProcess = stopProcessResponse.Execute();
+
+            Assert.AreEqual(command, stopProcessResponse.GetCommand());
+            Assert.IsFalse(resultStopProcess.IB_Exception);
+            Assert.IsNull(resultStopProcess.Message);            
+        }
     }
 }
