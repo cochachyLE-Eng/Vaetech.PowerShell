@@ -17,7 +17,7 @@ Vaetech.PowerShell is a personal open source project that I spent several nights
 
 Donating helps pay for things such as web hosting, domain registration and licenses for developer tools such as a performance profiler, memory profiler, a static code analysis tool, and more. It also helps motivate me to continue working on the project.
 
-[![](https://www.paypal.com/en_PE/i/scr/pixel.gif)](https://www.paypal.com/donate/?business=BH6Q2ZXHL9LXQ&no_recurring=0&currency_code=USD)
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?business=BH6Q2ZXHL9LXQ&no_recurring=0&currency_code=USD){:target="_blank" rel="noopener"}
 
 ## License Information
 
