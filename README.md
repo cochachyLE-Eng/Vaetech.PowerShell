@@ -95,7 +95,7 @@ will allow Vaetech.PowerShell to build successfully.
 
 ### How can it be used?
 
-At its most basic, it only takes a few lines of code to run PowerShell queries with lambda expressions.
+It only takes a few lines of code to run PowerShell commands with lambda expressions.
 
 ```csharp
 // Gets the processes that are running on the local computer.
