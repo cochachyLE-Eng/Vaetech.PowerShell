@@ -11,6 +11,14 @@
 Vaetech.PowerShell is a C# library which may be used for running commands with lambda expressions and getting data from PowerShell, in
 .Net Framework, .Net Standard and .Net Core
 
+## Donate
+
+Vaetech.PowerShell is a personal open source project that I spent several nights perfecting to make it useful, lightweight, and easy to use. I need your help to cover some implementation costs.
+
+Donating helps pay for things such as web hosting, domain registration and licenses for developer tools such as a performance profiler, memory profiler, a static code analysis tool, and more. It also helps motivate me to continue working on the project.
+
+<a href="https://www.paypal.com/donate/?business=BH6Q2ZXHL9LXQ&no_recurring=0&currency_code=USD" _target="blank"><img alt="Click here to lend your support to Vaetech.PowerShell by making a donation!" src="https://www.paypal.com/en_PE/i/scr/pixel.gif"></a>
+
 ## License Information
 
 ```

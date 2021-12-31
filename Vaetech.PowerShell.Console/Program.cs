@@ -13,9 +13,9 @@ namespace Vaetech.PowerShell.Console
 
             GetProcessInFormatList();
             GetProcessWithErrorActionInCustomCollection();
-            GetProcessByRangeDate();
+            GetProcessByDateRange();
 
-            StopProcessByRangeDate();
+            StopProcessByDateRange();
 
             System.Console.ReadKey();            
         }
@@ -56,7 +56,7 @@ namespace Vaetech.PowerShell.Console
         /// <summary>         
         /// Get results by date range
         /// </summary>
-        public static void GetProcessByRangeDate()
+        public static void GetProcessByDateRange()
         {
             System.Console.WriteLine("# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.Console.WriteLine("# Get results by date range");
@@ -79,7 +79,7 @@ namespace Vaetech.PowerShell.Console
                 }
             }
         }
-        public static void StopProcessByRangeDate()
+        public static void StopProcessByDateRange()
         {
             System.Console.WriteLine("# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.Console.WriteLine("# Stop Process (-Force) by date range");

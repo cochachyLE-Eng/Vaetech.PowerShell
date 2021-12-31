@@ -44,7 +44,7 @@ namespace Vaetech.PowerShell.Tests
             Assert.IsNotNull(resultGetProcess.List);            
         }
         [Test]
-        public void GetProcessByRangeDate()
+        public void GetProcessByDateRange()
         {
             // Settings
             PShellSettings.DateFormat = "yyyy/MM/dd hh:mm:ss";
@@ -65,7 +65,7 @@ namespace Vaetech.PowerShell.Tests
             Assert.IsNotNull(resultGetProcess.List);
         }
         [Test]
-        public void StopProcessByRangeDate()
+        public void StopProcessByDateRange()
         {
             // Settings
             PShellSettings.DateFormat = "yyyy/MM/dd hh:mm:ss";
