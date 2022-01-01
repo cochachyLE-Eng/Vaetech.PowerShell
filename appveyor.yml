@@ -1,15 +1,67 @@
-image: Visual Studio 2019  
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+version: 1.0.{build}
+branches:  
+  only:
+    - master
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+image:
+  - Visual Studio 2019
+
+  - ps: |
+    if ($isLinux) {
+      Write-Host "> Running on Linux..."  -ForegroundColor DarkBlue -BackgroundColor DarkYellow
+    } else {
+      Write-Host "> Running on Windows..."  -ForegroundColor DarkBlue -BackgroundColor DarkYellow
+    }
   
-environment:
-  Appveyor: true
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+platform: Any CPU
+configuration: Release
 
-init:
-  - git config --global core.autocrlf input
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+test:
+  categories:
+    only:
+      - GetProcessInFormatList
+      - GetProcessWithErrorActionInCustomCollection
+      - GetProcessByDateRange
+      - StopProcessByDateRange
 
-nuget:  
-  disable_publish_on_pr: true 
+before_deploy:
+  - ps: |
+    write-host "Running tests :" -foregroundcolor black -backgroundcolor Yellow -nonewline
+    write-host " Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj (all frameworks)" -ForegroundColor White -BackgroundColor DarkMagenta
+    Write-Host "dotnet --version:" (dotnet --version) -ForegroundColor "Yellow"
 
-build_script:
-  - ps: .\build.ps1 -PullRequestNumber "$env:APPVEYOR_PULL_REQUEST_NUMBER" -CreatePackages $true
+test_script:    
+  - dotnet build "Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj" -c Release /p:CI=true  
+  - ps: Write-Host "Done building." -ForegroundColor "Green"
+  - dotnet test "Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj" -c Release --no-build
+  - ps: Write-Host "Done testing." -ForegroundColor "Green"
 
-test: off
+#---------------------------------#
+#        global handlers          #
+#---------------------------------#
+on_success:  
+  - ps: Write-Host "Tests passed!" -ForegroundColor "Green"  
+
+on_failure:  
+  - ps: write-Host "Error with tests, aborting build." -Foreground "Red"
+
+on_finish:
+  - ps: Write-Host "Build Complete." -ForegroundColor "Green"
+  - ps: |
+    if ($isLinux) {
+      Write-Host "Process finished, in Linux" -ForegroundColor "Yellow"
+    } else {
+      Write-Host "Process finished, in Windows" -ForegroundColor "Yellow"
+    }  
