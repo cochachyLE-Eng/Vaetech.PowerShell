@@ -15,9 +15,9 @@ image:
 
   - ps: |
     if ($isLinux) {
-      Write-Host "> Running on Linux..."  -ForegroundColor DarkBlue -BackgroundColor DarkYellow
+      Write-Host "Running on Linux..."  -ForegroundColor "DarkBlue" -BackgroundColor "DarkYellow"
     } else {
-      Write-Host "> Running on Windows..."  -ForegroundColor DarkBlue -BackgroundColor DarkYellow
+      Write-Host "Running on Windows..."  -ForegroundColor "DarkBlue" -BackgroundColor "DarkYellow"
     }
   
 #---------------------------------#
