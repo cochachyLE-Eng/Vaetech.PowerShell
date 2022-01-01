@@ -6,9 +6,9 @@ param(
 )
 
 if ($isLinux) {
-    Write-Host "> Running on Linux..."  -ForegroundColor Black -BackgroundColor Yellow
+    Write-Host "> Running on Linux..."  -ForegroundColor Black -BackgroundColor White
 } else {
-    Write-Host "> Running on Windows..."  -ForegroundColor Black -BackgroundColor Yellow
+    Write-Host "> Running on Windows..."  -ForegroundColor Black -BackgroundColor White
 }
 
 Write-Host "Run Parameters:" -ForegroundColor Cyan
@@ -23,14 +23,14 @@ if ($PullRequestNumber) {
     $CreatePackages = $false
 }
 
-Write-Host "Building all projects (Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj traversal)..." -ForegroundColor "Magenta"
+Write-Host "Building all projects (Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj traversal)..." -ForegroundColor Yellow
 dotnet build ".\Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj" -c Release /p:CI=true
 Write-Host "Done building." -ForegroundColor "Green"
 
 if ($RunTests) 
 {
     write-host "Running tests :" -foregroundcolor black -backgroundcolor Yellow -nonewline
-    write-host " Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj traversal (all frameworks)" -ForegroundColor White -BackgroundColor DarkMagenta
+    write-host " Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj traversal (all frameworks)" -ForegroundColor White -BackgroundColor Black
     
     dotnet test ".\Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj" -c Release --no-build
     if ($LastExitCode -ne 0) {
@@ -52,7 +52,7 @@ if ($CreatePackages) {
 Write-Host "Build Complete." -ForegroundColor "Green"
 
 if ($isLinux) {
-    Write-Host "Process finished, in Linux" -ForegroundColor "Yellow"
+    Write-Host "Process finished, in Linux"  -ForegroundColor Black -BackgroundColor White
 } else {
-    Write-Host "Process finished, in Windows" -ForegroundColor "Yellow"
-} 
+    Write-Host "Process finished, in Windows"  -ForegroundColor Black -BackgroundColor White
+}
