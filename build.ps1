@@ -5,6 +5,12 @@ param(
     [string] $PullRequestNumber
 )
 
+if ($isLinux) {
+    Write-Host "> Running on Linux..."  -ForegroundColor DarkBlue -BackgroundColor DarkYellow
+} else {
+    Write-Host "> Running on Windows..."  -ForegroundColor DarkBlue -BackgroundColor DarkYellow
+}
+
 Write-Host "Run Parameters:" -ForegroundColor Cyan
 Write-Host "  CreatePackages: $CreatePackages"
 Write-Host "  RunTests: $RunTests"
