@@ -15,7 +15,7 @@ namespace Vaetech.PowerShell
             string condition = GetCondition(predicate.Body);
             return getProcess.AddCommand(GetProcessEnums.WhereObject, $"|{GetProcessTypes.WhereObject} {condition}");
         }
-        public static string GetCondition(Expression expression)
+        private static string GetCondition(Expression expression)
         {
             string condition = string.Empty;
 

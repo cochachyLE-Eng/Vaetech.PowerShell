@@ -5,9 +5,10 @@ using Vaetech.PowerShell.Types;
 
 namespace Vaetech.PowerShell.Tests
 {
-    public class Tests
-    {    
-        [Test]
+    [TestFixture]
+    public class SuccessTests
+    {            
+        [Test, Category("GetProcessInFormatList")]
         public void GetProcessInFormatList()
         {
             // Settings
@@ -22,7 +23,7 @@ namespace Vaetech.PowerShell.Tests
             
             Assert.AreEqual(command, getProcessResponse.GetCommand());
         }
-        [Test]       
+        [Test, Category("GetProcessWithErrorActionInCustomCollection")]
         public void GetProcessWithErrorActionInCustomCollection()
         {
             // Settings
@@ -43,7 +44,7 @@ namespace Vaetech.PowerShell.Tests
             Assert.IsNull(resultGetProcess.Message);
             Assert.IsNotNull(resultGetProcess.List);            
         }
-        [Test]
+        [Test, Category("GetProcessByDateRange")]
         public void GetProcessByDateRange()
         {
             // Settings
@@ -64,7 +65,7 @@ namespace Vaetech.PowerShell.Tests
             Assert.IsNull(resultGetProcess.Message);
             Assert.IsNotNull(resultGetProcess.List);
         }
-        [Test]
+        [Test, Category("StopProcessByDateRange")]
         public void StopProcessByDateRange()
         {
             // Settings

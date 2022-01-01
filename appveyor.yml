@@ -1,0 +1,67 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+version: 1.0.{build}
+branches:  
+  only:
+    - master
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+image:
+  - Visual Studio 2019
+#-- Ubuntu
+
+  - ps: |
+    if ($isLinux) {
+      Write-Host "> Running on Linux..."  -ForegroundColor DarkBlue -BackgroundColor DarkYellow
+    } else {
+      Write-Host "> Running on Windows..."  -ForegroundColor DarkBlue -BackgroundColor DarkYellow
+    }
+  
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+platform: Any CPU
+configuration: Release
+
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+test:
+  categories:
+    only:
+      - GetProcessInFormatList
+      - GetProcessWithErrorActionInCustomCollection
+      - GetProcessByDateRange
+      - StopProcessByDateRange
+
+before_deploy:
+  - write-host "Running tests :" -foregroundcolor black -backgroundcolor Yellow -nonewline
+  - write-host " Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj (all frameworks)" -ForegroundColor White -BackgroundColor DarkMagenta
+  - Write-Host "dotnet --version:" (dotnet --version) -ForegroundColor "Yellow"
+
+test_script:    
+  - dotnet build "Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj" -c Release /p:CI=true  
+  - Write-Host "Done building." -ForegroundColor "Green"
+  - dotnet test "Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj" -c Release --no-build
+  - Write-Host "Done testing." -ForegroundColor "Green"
+
+#---------------------------------#
+#        global handlers          #
+#---------------------------------#
+on_success:  
+  - Write-Host "Tests passed!" -ForegroundColor "Green"  
+
+on_failure:  
+  - write-Host "Error with tests, aborting build." -Foreground "Red"
+
+on_finish:
+  - Write-Host "Build Complete." -ForegroundColor "Green"
+  - ps: |
+    if ($isLinux) {
+      Write-Host "Process finished, in Linux" -ForegroundColor "Yellow"
+    } else {
+      Write-Host "Process finished, in Windows" -ForegroundColor "Yellow"
+    }  
