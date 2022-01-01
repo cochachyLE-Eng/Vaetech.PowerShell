@@ -6,9 +6,9 @@ param(
 )
 
 if ($isLinux) {
-    Write-Host "> Running on Linux..."  -ForegroundColor DarkBlue -BackgroundColor DarkYellow
+    Write-Host "> Running on Linux..."  -ForegroundColor Black -BackgroundColor Yellow
 } else {
-    Write-Host "> Running on Windows..."  -ForegroundColor DarkBlue -BackgroundColor DarkYellow
+    Write-Host "> Running on Windows..."  -ForegroundColor Black -BackgroundColor Yellow
 }
 
 Write-Host "Run Parameters:" -ForegroundColor Cyan
@@ -27,8 +27,11 @@ Write-Host "Building all projects (Vaetech.PowerShell.Tests\Vaetech.PowerShell.T
 dotnet build ".\Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj" -c Release /p:CI=true
 Write-Host "Done building." -ForegroundColor "Green"
 
-if ($RunTests) {
-    Write-Host "Running tests: Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj traversal (all frameworks)" -ForegroundColor "Magenta"
+if ($RunTests) 
+{
+    write-host "Running tests :" -foregroundcolor black -backgroundcolor Yellow -nonewline
+    write-host " Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj traversal (all frameworks)" -ForegroundColor White -BackgroundColor DarkMagenta
+    
     dotnet test ".\Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj" -c Release --no-build
     if ($LastExitCode -ne 0) {
         Write-Host "Error with tests, aborting build." -Foreground "Red"
@@ -47,3 +50,9 @@ if ($CreatePackages) {
     dotnet pack ".\Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj" --no-build -c Release /p:PackageOutputPath=$packageOutputFolder /p:CI=true
 }
 Write-Host "Build Complete." -ForegroundColor "Green"
+
+if ($isLinux) {
+    Write-Host "Process finished, in Linux" -ForegroundColor "Yellow"
+} else {
+    Write-Host "Process finished, in Windows" -ForegroundColor "Yellow"
+} 
