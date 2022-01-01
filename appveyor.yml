@@ -1,4 +1,4 @@
-image: Visual Studio 2019  
+image: Visual Studio 2015  
   
 environment:
   Appveyor: true
@@ -9,9 +9,7 @@ init:
 nuget:  
   disable_publish_on_pr: true 
 
-before_test:
-  - ps: Write-Host "dotnet --version:" (dotnet --version) -ForegroundColor "Yellow"
+build_script:
+  - ps: .\build.ps1 -PullRequestNumber "$env:APPVEYOR_PULL_REQUEST_NUMBER" -CreatePackages $true
 
-test_script:
-  - dotnet test "Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj" -c Release --no-build
-  - ps: Write-Host "Done testing." -ForegroundColor "Green"
+test: off
