@@ -19,7 +19,7 @@ namespace Vaetech.PowerShell
                 StartInfo = new ProcessStartInfo
                 {
                     WorkingDirectory = directoryWorking,
-                    FileName = isWindows ? "PowerShell.exe" : "/bin/bash",
+                    FileName = isWindows ? "PowerShell.exe" : "pwsh.exe",
                     Arguments = isWindows ? $"{escapedArgs}" : $"-c \"{escapedArgs}\"",                    
                     RedirectStandardOutput = true,  
                     RedirectStandardError = true,
