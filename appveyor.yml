@@ -52,9 +52,4 @@ on_failure:
 
 on_finish:
   - Write-Host "Build Complete." -ForegroundColor "Green"
-  - ps: |
-    if ($isLinux) {
-      Write-Host "Process finished, in Linux" -ForegroundColor "Yellow"
-    } else {
-      Write-Host "Process finished, in Windows" -ForegroundColor "Yellow"
-    }  
+  - Write-Host "Process finished, in Windows" -ForegroundColor "Yellow"  
