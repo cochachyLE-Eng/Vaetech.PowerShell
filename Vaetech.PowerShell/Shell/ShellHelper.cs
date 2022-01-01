@@ -7,21 +7,18 @@ using Vaetech.Runtime.Utils.Platforms;
 namespace Vaetech.PowerShell
 {
     public static class ShellHelper
-    {
+    {        
         public static ShellExecutionResult Execute<T>(string cmd, Action<string> stdErrDataReceivedCallback = null, Action<string> stdOutDataReceivedCallback = null)
-            => Execute<T>("C:\\", cmd, stdErrDataReceivedCallback, stdOutDataReceivedCallback);
-        public static ShellExecutionResult Execute<T>(string directoryWorking, string cmd, Action<string> stdErrDataReceivedCallback = null, Action<string> stdOutDataReceivedCallback = null)
-        {
-            bool isWindows = OSPlatform.IsWindows;
+        {            
             var escapedArgs = cmd.Replace("\"", "\\\"");
             var outputBuilder = new StringBuilder();
             var process = new Process()
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    WorkingDirectory = isWindows ? directoryWorking : "",
-                    FileName = isWindows ? "PowerShell.exe" : "PowerShell",
-                    Arguments = isWindows ? $"{escapedArgs}" : $"-c \"{escapedArgs}\"",                    
+                    WorkingDirectory = ShellHelper.GetWorkingDirectory(),
+                    FileName = ShellHelper.GetArguments(),
+                    Arguments = $"{escapedArgs}",                    
                     RedirectStandardOutput = true,  
                     RedirectStandardError = true,
                     UseShellExecute = false,
@@ -76,11 +73,27 @@ namespace Vaetech.PowerShell
                 Output = outputBuilder.ToString()
             };
         }
-
-        public static string SanitizeFilename(string filename)
+        private static string GetWorkingDirectory()
         {
-            filename = filename.Replace("/", "").Replace("\\", "").Replace("\"", "");
-            return string.Concat(filename.Split(Path.GetInvalidFileNameChars()));
+            if (OSPlatform.IsWindows)
+                return "C:/";
+            if (OSPlatform.IsLinux)
+                return "/usr/bin"; ///usr/share/dotnet/
+            if (OSPlatform.IsMacOSX)
+                return "/usr/local/bin"; ///usr/local/share/dotnet
+            throw new InvalidOperationException("Unsupported platform.");
+        }
+        private static string GetArguments()
+        {
+            if (OSPlatform.IsWindows)
+                return "PowerShell.exe";
+            if (OSPlatform.IsLinux)
+                ///bin/sh -c 'PATH="<dotnet-root-dir>:$PATH" DOTNET_ROOT="<dotnet-root-dir>" exec ~/.dotnet/tools/pwsh'
+                return "sh -c 'exec ~/.dotnet/tools/pwsh"; 
+            if (OSPlatform.IsMacOSX)
+                ///bin/sh -lc 'PATH="<dotnet-root-dir>:$PATH" DOTNET_ROOT="<dotnet-root-dir>" exec ~/.dotnet/tools/pwsh'
+                return "sh -lc 'PATH=\"/usr/local/share/dotnet:$PATH\" exec ~/.dotnet/tools/pwsh'"; ///usr/local/share/dotnet
+            throw new InvalidOperationException("Unsupported platform.");
         }
     }
 }
