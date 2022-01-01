@@ -89,10 +89,10 @@ namespace Vaetech.PowerShell
                 return "PowerShell.exe";
             if (OSPlatform.IsLinux)
                 ///bin/sh -c 'PATH="<dotnet-root-dir>:$PATH" DOTNET_ROOT="<dotnet-root-dir>" exec ~/.dotnet/tools/pwsh'
-                return "sh -c 'exec ~/.dotnet/tools/pwsh"; 
+                return "/bin/sh -c 'exec ~/.dotnet/tools/pwsh"; 
             if (OSPlatform.IsMacOSX)
                 ///bin/sh -lc 'PATH="<dotnet-root-dir>:$PATH" DOTNET_ROOT="<dotnet-root-dir>" exec ~/.dotnet/tools/pwsh'
-                return "sh -lc 'PATH=\"/usr/local/share/dotnet:$PATH\" exec ~/.dotnet/tools/pwsh'"; ///usr/local/share/dotnet
+                return "/bin/sh -lc 'PATH=\"/usr/local/share/dotnet:$PATH\" exec ~/.dotnet/tools/pwsh'"; ///usr/local/share/dotnet
             throw new InvalidOperationException("Unsupported platform.");
         }
     }
