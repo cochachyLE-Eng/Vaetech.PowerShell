@@ -52,18 +52,17 @@ namespace Vaetech.PowerShell.Tests
 
             // Parameters
             DateTime[] dateTimes = new DateTime[] { DateTime.Now.AddDays(-7), DateTime.Now.AddDays(-1) };
-            string command = $"Get-Process svchost, w3wp |Where-Object {{$_.StartTime -gt (Get-Date -Date \"{dateTimes[0].ToString(PShellSettings.DateFormat)}\") -and $_.StartTime -lt (Get-Date -Date \"{dateTimes[1].ToString(PShellSettings.DateFormat)}\")}} |Select-Object Name, Id, StartTime, PM, WS, VM, CPU, Handles |ConvertTo-Json";
+            string command = $"Get-Process svchost, w3wp -ErrorAction SilentlyContinue |Where-Object {{$_.StartTime -gt (Get-Date -Date \"{dateTimes[0].ToString(PShellSettings.DateFormat)}\") -and $_.StartTime -lt (Get-Date -Date \"{dateTimes[1].ToString(PShellSettings.DateFormat)}\")}} |Select-Object Name, Id, StartTime, PM, WS, VM, CPU, Handles |ConvertTo-Json";
 
             // Get results by date range.
-            var getProcessResponse = PShell.GetProcess("svchost", "w3wp").WhereObject(c => c.StartTime > dateTimes[0] && c.StartTime < dateTimes[1]).SelectObject(x => new { x.Name, x.Id, x.StartTime, x.PM, x.WS, x.VM, x.CPU, x.Handles }).ConvertToJson();
+            var getProcessResponse = PShell.GetProcess(ErrorAction.SilentlyContinue, "svchost", "w3wp").WhereObject(c => c.StartTime > dateTimes[0] && c.StartTime < dateTimes[1]).SelectObject(x => new { x.Name, x.Id, x.StartTime, x.PM, x.WS, x.VM, x.CPU, x.Handles }).ConvertToJson();
             
             // Execute command
             ActionResult<GetProcessResponse> resultGetProcess = getProcessResponse.Execute();
 
             Assert.AreEqual(command, getProcessResponse.GetCommand());
             Assert.IsFalse(resultGetProcess.IB_Exception);
-            Assert.IsNull(resultGetProcess.Message);
-            Assert.IsNotNull(resultGetProcess.List);
+            Assert.IsNull(resultGetProcess.Message);            
         }
         [Test, Category("StopProcessByDateRange")]
         public void StopProcessByDateRange()
@@ -73,10 +72,10 @@ namespace Vaetech.PowerShell.Tests
 
             // Parameters
             DateTime[] dateTimes = new DateTime[] { DateTime.Now.AddDays(-7), DateTime.Now.AddDays(-1) };
-            string command = $"Get-Process w3wp |Where-Object {{$_.StartTime -gt (Get-Date -Date \"{dateTimes[0].ToString(PShellSettings.DateFormat)}\") -and $_.StartTime -lt (Get-Date -Date \"{dateTimes[1].ToString(PShellSettings.DateFormat)}\")}} |Stop-Process -Force";
+            string command = $"Get-Process w3wp -ErrorAction SilentlyContinue |Where-Object {{$_.StartTime -gt (Get-Date -Date \"{dateTimes[0].ToString(PShellSettings.DateFormat)}\") -and $_.StartTime -lt (Get-Date -Date \"{dateTimes[1].ToString(PShellSettings.DateFormat)}\")}} |Stop-Process -Force";
 
             // Stop Process (-Force) by date range.
-            var stopProcessResponse = PShell.GetProcess("w3wp").WhereObject(c => c.StartTime > dateTimes[0] && c.StartTime < dateTimes[1]).StopProcessForce();
+            var stopProcessResponse = PShell.GetProcess(ErrorAction.SilentlyContinue, "w3wp").WhereObject(c => c.StartTime > dateTimes[0] && c.StartTime < dateTimes[1]).StopProcessForce();
 
             // Execute command
             ActionResult<GetProcessResponse> resultStopProcess = stopProcessResponse.Execute();
