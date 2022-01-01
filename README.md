@@ -6,6 +6,10 @@
 |:--------------|:------------:|
 |**Vaetech.PowerShell**    |[![NuGet Badge Vaetech.PowerShell](https://buildstats.info/nuget/Vaetech.PowerShell)](https://www.nuget.org/packages/Vaetech.PowerShell)
 
+|   Platform   |Build Status|
+|:-------------|:----------:|
+|**Windows**  |[![Build status](https://ci.appveyor.com/api/projects/status/19qpx965dh2s3lp1?svg=true)](https://ci.appveyor.com/project/cochachyLE-Eng/vaetech-powershell)|
+
 ## What is Vaetech.PowerShell?
 
 Vaetech.PowerShell is a C# library which may be used for running commands with lambda expressions and getting data from PowerShell, in
