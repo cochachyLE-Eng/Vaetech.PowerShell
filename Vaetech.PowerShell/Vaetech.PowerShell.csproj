@@ -21,7 +21,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />    
-    <PackageReference Include="Vaetech.Data.ContentResult" Version="1.6.7" />
+    <PackageReference Include="Vaetech.Data.ContentResult" Version="1.6.7" />    
+    <PackageReference Include="Vaetech.Runtime.Utils" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>

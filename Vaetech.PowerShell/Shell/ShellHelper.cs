@@ -2,6 +2,7 @@
 using System.Text;
 using System.IO;
 using System;
+using Vaetech.Runtime.Utils.Platforms;
 
 namespace Vaetech.PowerShell
 {
@@ -11,15 +12,15 @@ namespace Vaetech.PowerShell
             => Execute<T>("C:\\", cmd, stdErrDataReceivedCallback, stdOutDataReceivedCallback);
         public static ShellExecutionResult Execute<T>(string directoryWorking, string cmd, Action<string> stdErrDataReceivedCallback = null, Action<string> stdOutDataReceivedCallback = null)
         {
-            bool isWindows = true;
+            bool isWindows = OSPlatform.IsWindows;
             var escapedArgs = cmd.Replace("\"", "\\\"");
             var outputBuilder = new StringBuilder();
             var process = new Process()
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    WorkingDirectory = directoryWorking,
-                    FileName = isWindows ? "PowerShell.exe" : "pwsh.exe",
+                    WorkingDirectory = isWindows ? directoryWorking : "",
+                    FileName = isWindows ? "PowerShell.exe" : "PowerShell",
                     Arguments = isWindows ? $"{escapedArgs}" : $"-c \"{escapedArgs}\"",                    
                     RedirectStandardOutput = true,  
                     RedirectStandardError = true,
