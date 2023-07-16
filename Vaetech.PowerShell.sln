@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vaetech.PowerShell.Console"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vaetech.PowerShell.Tests", "Vaetech.PowerShell.Tests\Vaetech.PowerShell.Tests.csproj", "{DA7489A4-4943-48D8-8E2B-55181B92C3BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vaetech.PowerShell.IISAdministration", "Vaetech.PowerShell.IISAdministration\Vaetech.PowerShell.IISAdministration.csproj", "{BFBFF797-242C-4359-B47D-66808368D7C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DA7489A4-4943-48D8-8E2B-55181B92C3BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA7489A4-4943-48D8-8E2B-55181B92C3BB}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{DA7489A4-4943-48D8-8E2B-55181B92C3BB}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{BFBFF797-242C-4359-B47D-66808368D7C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFBFF797-242C-4359-B47D-66808368D7C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFBFF797-242C-4359-B47D-66808368D7C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFBFF797-242C-4359-B47D-66808368D7C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

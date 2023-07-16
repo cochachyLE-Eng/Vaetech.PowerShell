@@ -11,13 +11,37 @@ namespace Vaetech.PowerShell.Console
             // Settings
             PShellSettings.DateFormat = "yyyy/MM/dd hh:mm:ss";
 
-            GetProcessInFormatList();
-            GetProcessWithErrorActionInCustomCollection();
-            GetProcessByDateRange();
+            TestExpression();
 
-            StopProcessByDateRange();
+            //GetProcessInFormatList();
+            //GetProcessWithErrorActionInCustomCollection();
+            //GetProcessByDateRange();
+
+            //StopProcessByDateRange();
 
             System.Console.ReadKey();            
+        }
+        public static void TestExpression()
+        {
+            var getProcessResponse1 = PShell.GetProcess("svchost", "w3wp").WhereObject(c => c.StartTime == DateTime.Now.Date).SelectObject(x => new { x.Name, x.Id, x.StartTime, x.PM, x.WS, x.VM, x.CPU, x.Handles }).ConvertToJson();
+            string command1 = getProcessResponse1.GetCommand();
+            System.Console.WriteLine(command1);
+
+            DateTime startTime = DateTime.Now.Date;
+            var getProcessResponse2 = PShell.GetProcess("svchost", "w3wp").WhereObject(c => c.StartTime == startTime).SelectObject(x => new { x.Name, x.Id, x.StartTime, x.PM, x.WS, x.VM, x.CPU, x.Handles }).ConvertToJson();
+            string command2 = getProcessResponse2.GetCommand();
+            System.Console.WriteLine(command2);
+
+            var getProcessResponse3 = PShell.GetProcess("svchost", "w3wp").WhereObject(c => c.StartTime > DateTime.Now.AddDays(-7) && c.StartTime < DateTime.Now.AddDays(-1)).SelectObject(x => new { x.Name, x.Id, x.StartTime, x.PM, x.WS, x.VM, x.CPU, x.Handles }).ConvertToJson();
+            string command3 = getProcessResponse3.GetCommand();
+            System.Console.WriteLine(command3);
+
+            DateTime[] startTimeArray = new DateTime[2];
+            startTimeArray[0] = DateTime.Now.AddDays(-7);
+            startTimeArray[1] = DateTime.Now.AddDays(-1);
+            var getProcessResponse4 = PShell.GetProcess("svchost", "w3wp").WhereObject(c => c.StartTime > startTimeArray[0] && c.StartTime < startTimeArray[1]).SelectObject(x => new { x.Name, x.Id, x.StartTime, x.PM, x.WS, x.VM, x.CPU, x.Handles }).ConvertToJson();
+            string command4 = getProcessResponse4.GetCommand();
+            System.Console.WriteLine(command4);
         }
         /// <summary>
         /// Gets the processes that are running on the local computer.        

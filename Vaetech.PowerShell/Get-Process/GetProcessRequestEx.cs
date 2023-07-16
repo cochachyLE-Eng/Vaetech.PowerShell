@@ -15,10 +15,101 @@ namespace Vaetech.PowerShell
             string condition = GetCondition(predicate.Body);
             return getProcess.AddCommand(GetProcessEnums.WhereObject, $"|{GetProcessTypes.WhereObject} {condition}");
         }
-        private static string GetCondition(Expression expression)
-        {
-            string condition = string.Empty;
 
+        private static string GetCondition(Expression expression)
+        {           
+            if (expression is BinaryExpression)
+            {
+                BinaryExpression be = expression as BinaryExpression;
+
+                if (be.Left is MemberExpression && be.Right is MemberExpression)
+                {
+                    MemberExpression me1 = be.Left as MemberExpression;
+                    MemberExpression me2 = be.Right as MemberExpression;
+                    string expresionType = GetExpressionType(be.NodeType);
+                    string conditions = string.Empty;
+                    object value = null;
+
+                    if (typeof(GetProcessResponse).GetProperty(me1.Member.Name) == null)
+                    {
+                        do
+                        {                            
+                            if (me1.Expression is MethodCallExpression)
+                                value = GetValue<ValueType>(me1.Expression as MethodCallExpression);
+                            else if (me1.Expression is ConstantExpression)
+                                value = (me1.Member as FieldInfo).GetValue((me1.Expression as ConstantExpression).Value);
+                            else if (me1.Expression is MemberExpression)
+                                me1 = me1.Expression as MemberExpression;
+                            if (value != null)
+                                break;
+                        } while (true);
+
+                        if (typeof(GetProcessResponse).GetProperty(me2.Member.Name) == null)
+                            throw new ArgumentException("The argument is invalid.");
+
+                        Type propType;
+                        switch (Type.GetTypeCode(Enum.GetUnderlyingType(value.GetType())))
+                        {
+                            case TypeCode.Byte: propType = typeof(byte); break;
+                            case TypeCode.SByte: propType = typeof(sbyte); break;
+                            case TypeCode.Int16: propType = typeof(short); break;
+                            case TypeCode.Int32: propType = typeof(int); break;
+                            case TypeCode.Int64: propType = typeof(long); break;
+                            case TypeCode.UInt16: propType = typeof(ushort); break;
+                            case TypeCode.UInt32: propType = typeof(uint); break;
+                            case TypeCode.UInt64: propType = typeof(ulong); break;
+                        }
+
+                        if (value.GetType() == typeof(DateTime))
+                        {
+                            string member = (be.Left as MemberExpression).Member.Name;
+                            if(IsMemberValid<DateTime>(member))
+                                conditions = $"{{$_.{me2.Member.Name}.{member} {expresionType} {GetDateRequest.GetDate((DateTime)value).GetCommand()}}}";
+                            else
+                                conditions = $"{{$_.{me2.Member.Name} {expresionType} {GetDateRequest.GetDate((DateTime)value).GetCommand()}}}";
+                        }
+                        else
+                        { 
+                            conditions = $"{{$_.{me2.Member.Name} {expresionType} \"{value}\"}}";
+                        }
+                    }
+                    else
+                    {                        
+                        do
+                        {
+                            if (me2.Expression is MethodCallExpression)
+                                value = GetValue<ValueType>(me2.Expression as MethodCallExpression);
+                            else if (me2.Expression is ConstantExpression)
+                                value = (me2.Member as FieldInfo).GetValue((me2.Expression as ConstantExpression).Value);
+                            else if (me2.Expression is MemberExpression)
+                                me2 = me2.Expression as MemberExpression;
+                            else
+                            {
+                                if (me2.Type == typeof(DateTime))
+                                    value = typeof(DateTime).GetProperty(me2.Member.Name).GetValue(me2);                                
+                            }
+                            if (value != null)
+                                break;
+                        } while (true);
+
+                        if (value.GetType() == typeof(DateTime))
+                        {
+                            string member = (be.Right as MemberExpression).Member.Name;
+                            if (IsMemberValid<DateTime>(member))
+                                conditions = $"{{$_.{me1.Member.Name}.{member} {expresionType} {GetDateRequest.GetDate((DateTime)value).GetCommand()}}}";
+                            else
+                                conditions = $"{{$_.{me1.Member.Name} {expresionType} {GetDateRequest.GetDate((DateTime)value).GetCommand()}}}";
+                        }
+                        else
+                        { 
+                            conditions = $"{{$_.{me1.Member.Name} {expresionType} \"{value}\"}}";
+                        }
+                    }
+                }
+            }
+
+
+            string condition = string.Empty;
             if (expression is BinaryExpression)
             {
                 BinaryExpression be = expression as BinaryExpression;
@@ -181,7 +272,7 @@ namespace Vaetech.PowerShell
                 throw new Exception("Not supported");             
             }
             return condition;
-        }
+        }        
         private static bool IsMemberValid<T>(string name)
         {
             if (typeof(T) == typeof(DateTime))
